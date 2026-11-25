@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GreenReso – Sensibilisation cybersécurité</title>
+<style>
+:root{--vert:#2B5A3C;--vert-fonce:#1E4129;--creme:#FBFBF3;--menthe:#E3EDE2;--trait:#C9D8C8;--texte:#1F2A22;--sec:#5A6B5E;--ok:#2B7A4B;--ko:#A8432F;--ko-bg:#F6E3DD}
+*{box-sizing:border-box}
+body{margin:0;background:var(--creme);color:var(--texte);font:17px/1.6 "Segoe UI",system-ui,-apple-system,sans-serif}
+header{display:flex;align-items:center;gap:14px;padding:18px 28px;border-bottom:2px solid var(--vert)}
+header svg{width:46px;height:46px}
+header b{font-size:26px;color:var(--vert);letter-spacing:-.5px;font-weight:700}
+header span{margin-left:auto;color:var(--sec);font-size:15px}
+main{max-width:860px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:32px;line-height:1.2;color:var(--vert);margin:0 0 8px;letter-spacing:-.5px}
+h2{font-size:22px;color:var(--vert);margin:0 0 6px}
+p{margin:0 0 14px}
+.sec{color:var(--sec)}
+button{font:inherit;font-weight:600;cursor:pointer;border-radius:12px;border:2px solid var(--vert);padding:10px 20px;background:var(--vert);color:#fff}
+button:hover{background:var(--vert-fonce)}
+button.alt{background:transparent;color:var(--vert)}
+button.alt:hover{background:var(--menthe)}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid #7FB48F;outline-offset:2px}
+.barre{height:10px;background:var(--menthe);border-radius:6px;overflow:hidden;margin:14px 0 26px}
+.barre i{display:block;height:100%;background:var(--vert);transition:width .3s}
+.liste{display:grid;gap:12px}
+.mod{display:flex;align-items:center;gap:16px;padding:16px 18px;border:2px solid var(--trait);border-radius:16px;background:#fff;cursor:pointer;text-align:left;color:var(--texte);width:100%}
+.mod:hover{border-color:var(--vert);background:#fff}
+.mod .pastille{flex:none;width:40px;height:40px;border-radius:50%;background:var(--menthe);color:var(--vert);display:grid;place-items:center;font-weight:700}
+.mod.fait .pastille{background:var(--vert);color:#fff}
+.mod strong{display:block;font-size:18px}
+.mod small{color:var(--sec);font-size:14px}
+.mod .score{margin-left:auto;font-weight:700;color:var(--vert)}
+.final{margin-top:20px;background:var(--vert);color:#fff;border-color:var(--vert)}
+.final strong,.final small,.final .score{color:#fff}
+.final .pastille{background:rgba(255,255,255,.18);color:#fff}
+.final:hover{background:var(--vert-fonce)}
+.final[disabled]{opacity:.55;cursor:not-allowed}
+.media{aspect-ratio:16/9;width:100%;border-radius:16px;overflow:hidden;background:var(--vert-fonce);margin-bottom:18px}
+.media iframe,.media video{width:100%;height:100%;border:0;display:block}
+.ph{height:100%;display:grid;place-items:center;color:#cfe3d3;text-align:center;padding:20px;font-size:15px}
+.resume{background:var(--menthe);border-radius:14px;padding:14px 18px;margin-bottom:22px}
+.resume ul{margin:6px 0 0;padding-left:20px}
+.q{border:2px solid var(--trait);border-radius:16px;padding:22px;background:#fff}
+.q .cpt{color:var(--sec);font-size:14px;margin-bottom:6px}
+.q h3{font-size:20px;margin:0 0 16px;line-height:1.35}
+.choix{display:grid;gap:10px}
+.choix button{background:var(--creme);color:var(--texte);border:2px solid var(--trait);text-align:left;font-weight:500}
+.choix button:hover:not(:disabled){border-color:var(--vert);background:var(--menthe)}
+.choix button.bon{border-color:var(--ok);background:#DFF0E4;opacity:1}
+.choix button.mauvais{border-color:var(--ko);background:var(--ko-bg);opacity:1}
+.choix button:disabled:not(.bon):not(.mauvais){opacity:.55}
+.expl{margin-top:16px;padding:12px 16px;border-radius:12px;background:var(--menthe)}
+.expl.ko{background:var(--ko-bg)}
+.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.res{text-align:center;padding:30px 20px;border:2px solid var(--vert);border-radius:20px;background:#fff}
+.res .gros{font-size:56px;font-weight:700;color:var(--vert);line-height:1.1}
+.res.echec .gros{color:var(--ko)}
+.attest{display:none}
+footer{margin-top:40px;text-align:center}
+footer button{font-size:14px;padding:6px 14px}
+@media print{header span,button,footer{display:none}.attest{display:block}.res{border:3px solid var(--vert)}}
+</style>
+</head>
+<body>
+<header>
+  <svg viewBox="0 0 100 96" role="img" aria-label="Logo GreenReso">
+    <rect x="3" y="14" width="72" height="60" rx="10" fill="#2B5A3C"/>
+    <rect x="9" y="20" width="60" height="42" rx="4" fill="#FBFBF3"/>
+    <path d="M32 74h18l3 12H29z" fill="#2B5A3C"/>
+    <rect x="22" y="85" width="36" height="6" rx="3" fill="#2B5A3C"/>
+    <path d="M97 4C70 6 50 22 50 46c0 10 6 17 15 17 20-2 32-22 32-59z" fill="#2B5A3C" stroke="#FBFBF3" stroke-width="3"/>
+    <path d="M91 14C75 28 65 44 61 62" fill="none" stroke="#FBFBF3" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+  <b>GreenReso</b>
+  <span>Sensibilisation cybersécurité</span>
+</header>
+<main id="app"></main>
+
+<script>
+/* =====================================================================
+   1. CONFIGURATION : à modifier
+   ===================================================================== */
+const CONFIG = {
+  titre: "Les bons réflexes de cybersécurité",
+  intro: "Six modules courts : une vidéo, puis quelques questions. À la fin, un quiz final valide votre parcours.",
+  seuil: 80,            /* % de réussite du quiz final */
+  questionsFinal: 10    /* nombre de questions tirées au hasard pour le quiz final */
+};
+
+/* =====================================================================
+   2. CONTENU : ajoutez vos modules, vidéos et questions ici
+   - video : lien YouTube, ou fichier local (ex. "videos/phishing.mp4"), ou "" pour un espace réservé
+   - bonne : numéro de la bonne réponse dans "choix" (0 = première)
+   ===================================================================== */
+const MODULES = [
+  {
+    id: "phishing", titre: "Phishing et faux messages", duree: "1 min 15", video: "videos/phishing.mp4",
+    points: ["Adresse inhabituelle, pression, fautes, lien ou pièce jointe inattendus : méfiance.", "Ne cliquez pas tout de suite sur les liens et n'ouvrez pas les pièces jointes douteuses.", "En cas de doute, vérifiez auprès de l'expéditeur par un autre moyen de communication."],
+    questions: [
+      { q: "Que cherche à obtenir une personne qui pratique le phishing (hameçonnage) ?",
+        choix: ["Ralentir votre ordinateur", "Vous tromper pour récupérer des informations confidentielles", "Mettre à jour vos logiciels"], bonne: 1,
+        explication: "Le phishing consiste à tromper la victime pour obtenir mots de passe, coordonnées bancaires ou autres informations confidentielles." },
+      { q: "Vous recevez un mail « urgent » vous demandant de confirmer votre mot de passe. Que faites-vous ?",
+        choix: ["Je clique et je me connecte vite", "Je ne clique pas, je vérifie par un autre moyen et je préviens le support", "Je réponds pour demander des précisions"], bonne: 1,
+        explication: "Ne cliquez pas : vérifiez directement auprès de l'expéditeur supposé, par un autre canal, et signalez le message." },
+      { q: "Quel signe doit vous alerter dans un mail ?",
+        choix: ["Une signature complète", "Un message qui vous met la pression et contient des fautes", "Un logo de l'entreprise"], bonne: 1,
+        explication: "La pression pour agir vite et les formulations ou fautes inhabituelles sont des signes classiques d'hameçonnage." },
+      { q: "Un collègue vous envoie une pièce jointe que vous n'attendiez pas. Que faites-vous ?",
+        choix: ["Je ne l'ouvre pas et je vérifie auprès de lui par un autre moyen", "Je l'ouvre pour voir de quoi il s'agit", "Je la transfère à l'équipe pour avis"], bonne: 0,
+        explication: "Son compte peut avoir été piraté ou son identité usurpée. Un appel ou un message direct suffit pour vérifier." },
+      { q: "Votre contact habituel écrit depuis jean.dupont@greenreso.fr. Un mail arrive de jean.dupont@greenres0.fr (avec un zéro). Que faites-vous ?",
+        choix: ["Rien de particulier : les deux adresses se ressemblent", "Je me méfie : l'adresse est légèrement différente de l'habituelle", "Je réponds pour vérifier que c'est bien lui"], bonne: 1,
+        explication: "Une adresse légèrement différente de celle de l'interlocuteur habituel est un signe de message frauduleux. Ne répondez pas au mail : contactez la personne autrement." }
+    ]
+  },
+  {
+    id: "mdp", titre: "Mots de passe", duree: "1 min 40", video: "videos/mots-de-passe.mp4",
+    points: ["Un bon mot de passe est long, unique et personnel.", "Au moins 8 caractères, avec minuscules, majuscules, chiffres et caractères spéciaux.", "Évitez les informations personnelles et ne le communiquez jamais, même au service informatique."],
+    questions: [
+      { q: "Quelle méthode permet de créer un mot de passe solide et facile à retenir ?",
+        choix: ["Utiliser mon prénom suivi de ma date de naissance", "Retenir une phrase et prendre les initiales de chaque mot", "Utiliser le nom de l'entreprise suivi d'un chiffre"], bonne: 1,
+        explication: "On obtient une suite de caractères difficile à deviner. On peut y ajouter chiffres, caractères spéciaux et même quelques fautes volontaires." },
+      { q: "Quelle règle fait partie d'un bon mot de passe ?",
+        choix: ["Au moins 8 caractères, mêlant minuscules, majuscules, chiffres et caractères spéciaux", "Un mot entier du dictionnaire, facile à retenir", "Mon nom d'utilisateur suivi d'un chiffre"], bonne: 0,
+        explication: "Évitez les mots entiers et les informations faciles à trouver comme un nom d'utilisateur, de famille ou d'entreprise." },
+      { q: "Pourquoi utiliser un mot de passe différent pour chaque service ?",
+        choix: ["Pour utiliser plus de caractères", "Pour que mes autres comptes restent protégés si un site subit une fuite de données", "Parce que cela accélère la connexion"], bonne: 1,
+        explication: "Si un même mot de passe est volé sur un site, les autres comptes qui l'utilisent sont compromis." },
+      { q: "Une personne qui dit travailler au service informatique vous demande votre mot de passe. Que faites-vous ?",
+        choix: ["Je le donne : c'est le service informatique", "Je refuse et je préviens le service informatique par le canal officiel", "Je le donne, puis je le change"], bonne: 1,
+        explication: "Ne communiquez jamais votre mot de passe, même si la personne prétend travailler au service informatique." },
+      { q: "Comment conserver en sécurité de nombreux identifiants ?",
+        choix: ["Dans un fichier texte sur le bureau", "Sur un post-it collé sous le clavier", "Dans un gestionnaire de mots de passe"], bonne: 2,
+        explication: "Un gestionnaire de mots de passe stocke vos identifiants de manière sécurisée." }
+    ]
+  },
+  {
+    id: "usb", titre: "Clés USB et fuite de fichiers", duree: "1 min 20", video: "videos/usb.mp4",
+    points: ["Ne branchez jamais une clé USB dont vous ne connaissez pas l'origine.", "Pas de fichiers professionnels sur des supports personnels : utilisez l'accès sécurisé de l'entreprise.", "Avant d'envoyer un fichier, vérifiez le destinataire et son autorisation à le recevoir."],
+    questions: [
+      { q: "Vous trouvez une clé USB dans les locaux de l'entreprise. Que faites-vous ?",
+        choix: ["Je la branche pour trouver son propriétaire", "Je ne la branche pas et je la remets au service informatique", "Je la garde pour mon usage"], bonne: 1,
+        explication: "Même trouvée dans les locaux, une clé peut avoir été volontairement piégée." },
+      { q: "Que peut faire une clé USB infectée ?",
+        choix: ["Rien : une clé ne contient que des fichiers", "Contaminer votre ordinateur et se propager sur le réseau de l'entreprise", "Accélérer votre connexion"], bonne: 1,
+        explication: "Un logiciel malveillant peut contaminer le poste puis se propager sur le réseau." },
+      { q: "Vous voulez emporter un fichier client à la maison sur votre clé USB personnelle. Que faites-vous ?",
+        choix: ["Je l'emporte, c'est plus pratique", "Je n'utilise pas de support personnel : j'utilise l'accès sécurisé de l'entreprise", "Je l'envoie sur ma messagerie personnelle"], bonne: 1,
+        explication: "Les fichiers professionnels ne se transfèrent pas sur des supports personnels : une clé perdue, ce sont des données clients perdues." },
+      { q: "Avant d'envoyer un fichier contenant des informations clients, que vérifiez-vous ?",
+        choix: ["Rien, l'envoi est rapide", "Que le destinataire est le bon et qu'il est autorisé à le recevoir", "Que le fichier est le plus léger possible"], bonne: 1,
+        explication: "Certains documents contiennent des informations confidentielles : vérifiez toujours leur destination." }
+    ]
+  },
+  {
+    id: "poste", titre: "Verrouiller son poste", duree: "1 min 10", video: "videos/verrouillage-poste.mp4",
+    points: ["Je quitte mon bureau, je verrouille mon ordinateur.", "Sur Windows, le raccourci Windows + L verrouille la session immédiatement.", "En fin de journée, fermez votre session ou éteignez le poste selon les consignes."],
+    questions: [
+      { q: "Quel raccourci verrouille votre session Windows ?",
+        choix: ["Ctrl + S", "Alt + F4", "Windows + L"], bonne: 2,
+        explication: "Windows + L verrouille immédiatement l'écran. Prenez le réflexe à chaque absence." },
+      { q: "Vous partez cinq minutes prendre un café. Que faites-vous ?",
+        choix: ["Je laisse ma session ouverte, je reviens vite", "Je verrouille mon poste avant de partir", "J'éteins seulement l'écran"], bonne: 1,
+        explication: "Quelques instants suffisent à une personne de passage pour consulter vos fichiers ou vos mails. Verrouillez même pour une courte absence." },
+      { q: "Que se passe-t-il quand vous verrouillez votre poste avec Windows + L ?",
+        choix: ["L'ordinateur s'éteint", "L'ordinateur reste allumé, mais la session est inaccessible sans authentification", "Vos fichiers sont supprimés"], bonne: 1,
+        explication: "Vos programmes continuent de tourner, mais personne ne peut utiliser votre session sans s'authentifier." },
+      { q: "Que faire à la fin de la journée ?",
+        choix: ["Fermer sa session ou éteindre son poste selon les consignes de l'entreprise", "Laisser la session ouverte pour gagner du temps le lendemain", "Débrancher uniquement l'écran"], bonne: 0,
+        explication: "Fermez votre session ou éteignez votre poste selon les consignes de l'entreprise." }
+    ]
+  },
+  {
+    id: "wifi", titre: "Wi-Fi et télétravail", duree: "1 min 20", video: "videos/wifi-teletravail.mp4",
+    points: ["Privilégiez toujours un réseau Wi-Fi privé et sécurisé.", "En déplacement, évitez le Wi-Fi public pour les informations sensibles et utilisez le VPN de l'entreprise.", "Méfiez-vous des réseaux inconnus qui imitent le nom d'un réseau légitime."],
+    questions: [
+      { q: "Vous travaillez dans un café avec un Wi-Fi gratuit. Quelle précaution prendre ?",
+        choix: ["Aucune, le Wi-Fi est gratuit", "Me connecter au VPN de l'entreprise", "Désactiver l'antivirus"], bonne: 1,
+        explication: "Un réseau public peut être surveillé. Le VPN sécurise la connexion avec le réseau de l'entreprise." },
+      { q: "Qu'est-ce qu'un VPN ?",
+        choix: ["Un antivirus", "Une connexion sécurisée entre votre appareil et le réseau de l'entreprise", "Une clé USB sécurisée"], bonne: 1,
+        explication: "Un VPN (réseau privé virtuel) crée une connexion sécurisée entre votre appareil et le réseau de l'entreprise." },
+      { q: "En télétravail, que devez-vous vérifier chez vous ?",
+        choix: ["Que le Wi-Fi n'a pas de mot de passe, pour aller plus vite", "Que le Wi-Fi est protégé par un mot de passe robuste et que la box utilise un protocole de sécurité récent", "Que mes voisins peuvent s'y connecter"], bonne: 1,
+        explication: "Un réseau domestique doit être protégé par un mot de passe robuste et un protocole de sécurité récent." },
+      { q: "Dans un hôtel, deux réseaux ont des noms très proches. Comment réagir ?",
+        choix: ["Me connecter au plus rapide", "Vérifier auprès de l'hôtel quel est le réseau officiel avant de me connecter", "Me connecter aux deux"], bonne: 1,
+        explication: "Certains réseaux inconnus imitent le nom d'un réseau légitime. Vérifiez qu'il est fiable avant de vous connecter." },
+      { q: "En gare, vous devez consulter des informations professionnelles sensibles. Quelle est la meilleure option ?",
+        choix: ["Utiliser le Wi-Fi public sans précaution", "Éviter le Wi-Fi public ou passer par le VPN de l'entreprise", "Utiliser le Wi-Fi public en navigation privée"], bonne: 1,
+        explication: "Évitez les réseaux publics pour les informations sensibles et utilisez le VPN selon les consignes internes." }
+    ]
+  },
+  {
+    id: "doute", titre: "Que faire en cas de doute", duree: "1 min 20", video: "videos/doute.mp4",
+    points: ["Réagissez vite et ne cherchez pas à régler le problème seul.", "Ne supprimez rien et ne modifiez aucun paramètre.", "Prévenez le service informatique ou votre responsable et expliquez simplement ce qui s'est passé."],
+    questions: [
+      { q: "Vous avez cliqué sur un lien suspect. Quelle est la bonne réaction ?",
+        choix: ["Je ne dis rien en espérant que rien ne se passe", "Je préviens rapidement le service informatique", "J'éteins l'écran et je reprends mon travail"], bonne: 1,
+        explication: "Un incident signalé rapidement peut être maîtrisé avant de provoquer des conséquences plus importantes." },
+      { q: "Que faut-il éviter de faire après un incident ?",
+        choix: ["Supprimer des fichiers ou modifier des paramètres", "Prévenir le service informatique", "Noter l'heure de l'incident"], bonne: 0,
+        explication: "Supprimer des fichiers ou changer des paramètres peut compliquer l'identification du problème." },
+      { q: "Quelles informations donner lors du signalement ?",
+        choix: ["Seulement que j'ai un problème", "Ce que j'ai fait, ce que j'ai remarqué et à quel moment", "Uniquement le modèle de mon ordinateur"], bonne: 1,
+        explication: "Expliquez simplement ce qui s'est passé : vos actions, ce que vous avez constaté et l'heure." },
+      { q: "Vous avez saisi votre mot de passe sur un site douteux. Que faites-vous ?",
+        choix: ["Je le signale immédiatement pour que des mesures soient prises", "J'attends de voir si un problème apparaît", "Je change simplement de navigateur"], bonne: 0,
+        explication: "Si un mot de passe a été communiqué, il faut le signaler immédiatement." },
+      { q: "Vous avez un doute sur un incident qui semble mineur. Quelle attitude adopter ?",
+        choix: ["Garder le silence par peur d'une sanction", "Signaler quand même : mieux vaut un doute sans gravité qu'un silence face à un vrai problème", "Attendre la fin de la semaine pour en parler"], bonne: 1,
+        explication: "Ne cachez jamais une erreur par peur d'être sanctionné : un signalement rapide limite les dégâts." }
+    ]
+  }
+];
+
+/* =====================================================================
+   3. CODE : pas besoin d'y toucher
+   ===================================================================== */
+const $ = document.getElementById("app");
+const CLE = "greenreso-sensibilisation";
+let etat = { nom: "", modules: {}, final: null };
+try { etat = Object.assign(etat, JSON.parse(localStorage.getItem(CLE)) || {}); } catch (e) {}
+const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(etat)); } catch (e) {} };
+const melanger = a => a.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+
+function lecteur(v) {
+  if (!v) return '<div class="ph">Vidéo à ajouter : renseignez le champ « video » de ce module.</div>';
+  const y = v.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+  if (y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y[1]}" title="Vidéo du module" allowfullscreen></iframe>`;
+  return `<video controls src="${v}"></video>`;
+}
+
+function accueil() {
+  const faits = MODULES.filter(m => etat.modules[m.id] !== undefined).length;
+  const pct = Math.round(faits / MODULES.length * 100);
+  const pret = faits === MODULES.length;
+  $.innerHTML = `
+    <h1>${CONFIG.titre}</h1>
+    <p class="sec">${CONFIG.intro}</p>
+    <div class="barre" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+    <div class="liste">
+      ${MODULES.map((m, i) => {
+        const s = etat.modules[m.id];
+        return `<button class="mod ${s !== undefined ? "fait" : ""}" data-m="${m.id}">
+          <span class="pastille">${s !== undefined ? "✓" : i + 1}</span>
+          <span><strong>${m.titre}</strong><small>${m.duree} · ${m.questions.length} question${m.questions.length > 1 ? "s" : ""}</small></span>
+          ${s !== undefined ? `<span class="score">${s}%</span>` : ""}</button>`;
+      }).join("")}
+    </div>
+    <button class="mod final" id="final" ${pret ? "" : "disabled"}>
+      <span class="pastille">★</span>
+      <span><strong>Quiz final</strong><small>${pret ? "Débloqué : à vous de jouer" : "Terminez les " + MODULES.length + " modules pour le débloquer"}</small></span>
+      ${etat.final ? `<span class="score">${etat.final.score}%</span>` : ""}</button>
+    <footer><button class="alt" id="reset">Réinitialiser ma progression</button></footer>`;
+  $.querySelectorAll("[data-m]").forEach(b => b.onclick = () => module_(MODULES.find(m => m.id === b.dataset.m)));
+  document.getElementById("final").onclick = quizFinal;
+  document.getElementById("reset").onclick = () => { if (confirm("Effacer toute la progression ?")) { etat = { nom: etat.nom, modules: {}, final: null }; sauver(); accueil(); } };
+}
+
+function module_(m) {
+  $.innerHTML = `
+    <button class="alt" id="retour">← Retour</button>
+    <h1 style="margin-top:18px">${m.titre}</h1>
+    <div class="media">${lecteur(m.video)}</div>
+    <div class="resume"><strong>À retenir</strong><ul>${m.points.map(p => `<li>${p}</li>`).join("")}</ul></div>
+    <div id="quiz"></div>`;
+  document.getElementById("retour").onclick = accueil;
+  jouer(m.questions, document.getElementById("quiz"), score => {
+    etat.modules[m.id] = score; sauver();
+    document.getElementById("quiz").innerHTML = `<div class="res"><div class="gros">${score}%</div><p>Module terminé.</p><button id="ok">Retour aux modules</button></div>`;
+    document.getElementById("ok").onclick = accueil;
+  });
+}
+
+function quizFinal() {
+  const pool = melanger(MODULES.flatMap(m => m.questions)).slice(0, CONFIG.questionsFinal);
+  $.innerHTML = `<button class="alt" id="retour">← Retour</button><h1 style="margin-top:18px">Quiz final</h1><p class="sec">Réussite à partir de ${CONFIG.seuil} %.</p><div id="quiz"></div>`;
+  document.getElementById("retour").onclick = accueil;
+  jouer(pool, document.getElementById("quiz"), score => {
+    const ok = score >= CONFIG.seuil;
+    if (!etat.final || score > etat.final.score) etat.final = { score, date: new Date().toLocaleDateString("fr-FR") };
+    sauver();
+    document.getElementById("quiz").innerHTML = `
+      <div class="res ${ok ? "" : "echec"}"><div class="gros">${score}%</div>
+      <h2>${ok ? "Bravo, parcours validé !" : "Pas encore validé"}</h2>
+      <p>${ok ? "Vous maîtrisez les bons réflexes." : "Revoyez les modules puis retentez le quiz."}</p>
+      <div class="attest"><p>Attestation de sensibilisation à la cybersécurité délivrée le ${new Date().toLocaleDateString("fr-FR")}.</p></div>
+      <div class="actions" style="justify-content:center">
+        ${ok ? '<button id="imp">Imprimer l\'attestation</button>' : '<button id="again">Réessayer</button>'}
+        <button class="alt" id="ok">Retour aux modules</button></div></div>`;
+    document.getElementById("ok").onclick = accueil;
+    if (ok) document.getElementById("imp").onclick = () => window.print();
+    else document.getElementById("again").onclick = quizFinal;
+  });
+}
+
+function jouer(questions, zone, fin) {
+  let i = 0, bonnes = 0;
+  (function afficher() {
+    const q = questions[i];
+    zone.innerHTML = `<div class="q"><div class="cpt">Question ${i + 1} sur ${questions.length}</div><h3>${q.q}</h3>
+      <div class="choix">${melanger(q.choix.map((c, k) => k)).map(k => `<button data-k="${k}">${q.choix[k]}</button>`).join("")}</div>
+      <div id="fb"></div></div>`;
+    zone.querySelectorAll(".choix button").forEach(b => b.onclick = () => {
+      const k = +b.dataset.k, juste = k === q.bonne;
+      if (juste) bonnes++;
+      zone.querySelectorAll(".choix button").forEach(x => { x.disabled = true; if (+x.dataset.k === q.bonne) x.classList.add("bon"); });
+      if (!juste) b.classList.add("mauvais");
+      document.getElementById("fb").innerHTML = `<div class="expl ${juste ? "" : "ko"}"><strong>${juste ? "Bonne réponse." : "Pas tout à fait."}</strong> ${q.explication || ""}</div>
+        <div class="actions"><button id="suite">${i + 1 < questions.length ? "Question suivante" : "Voir mon résultat"}</button></div>`;
+      document.getElementById("suite").onclick = () => { i++; i < questions.length ? afficher() : fin(Math.round(bonnes / questions.length * 100)); };
+      document.getElementById("suite").focus();
+    });
+  })();
+}
+accueil();
+</script>
+</body>
+</html>
