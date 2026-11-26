@@ -1,3 +1,5 @@
+Index
+ · HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -59,6 +61,8 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .res .gros{font-size:56px;font-weight:700;color:var(--vert);line-height:1.1}
 .res.echec .gros{color:var(--ko)}
 .attest{display:none}
+.credits{max-width:860px;margin:0 auto;padding:18px 20px 34px;text-align:center;color:var(--sec);font-size:14px;border-top:1px solid var(--trait)}
+.credits strong{color:var(--vert)}
 footer{margin-top:40px;text-align:center}
 footer button{font-size:14px;padding:6px 14px}
 @media print{header span,button,footer{display:none}.attest{display:block}.res{border:3px solid var(--vert)}}
@@ -78,10 +82,14 @@ footer button{font-size:14px;padding:6px 14px}
   <span>Sensibilisation cybersécurité</span>
 </header>
 <main id="app"></main>
-
+<footer class="credits">
+  Site de sensibilisation conçu et réalisé par <strong>Lilian Douché</strong> et <strong>Paul Calais</strong><br>
+  Projet GreenReso · 2026
+</footer>
+ 
 <script>
 /* =====================================================================
-   1. PRESENTATIOB
+   1. CONFIGURATION : à modifier
    ===================================================================== */
 const CONFIG = {
   titre: "Les bons réflexes de cybersécurité",
@@ -89,9 +97,11 @@ const CONFIG = {
   seuil: 80,            /* % de réussite du quiz final */
   questionsFinal: 10    /* nombre de questions tirées au hasard pour le quiz final */
 };
-
+ 
 /* =====================================================================
-   2. CONTENU :
+   2. CONTENU : ajoutez vos modules, vidéos et questions ici
+   - video : lien YouTube, ou fichier local (ex. "phishing.mp4"), ou "" pour un espace réservé
+   - bonne : numéro de la bonne réponse dans "choix" (0 = première)
    ===================================================================== */
 const MODULES = [
   {
@@ -215,9 +225,9 @@ const MODULES = [
     ]
   }
 ];
-
+ 
 /* =====================================================================
-   3. CODE : 
+   3. CODE : pas besoin d'y toucher
    ===================================================================== */
 const $ = document.getElementById("app");
 const CLE = "greenreso-sensibilisation";
@@ -225,14 +235,14 @@ let etat = { nom: "", modules: {}, final: null };
 try { etat = Object.assign(etat, JSON.parse(localStorage.getItem(CLE)) || {}); } catch (e) {}
 const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(etat)); } catch (e) {} };
 const melanger = a => a.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
-
+ 
 function lecteur(v) {
   if (!v) return '<div class="ph">Vidéo à ajouter : renseignez le champ « video » de ce module.</div>';
   const y = v.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
   if (y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y[1]}" title="Vidéo du module" allowfullscreen></iframe>`;
   return `<video controls src="${v}"></video>`;
 }
-
+ 
 function accueil() {
   const faits = MODULES.filter(m => etat.modules[m.id] !== undefined).length;
   const pct = Math.round(faits / MODULES.length * 100);
@@ -259,7 +269,7 @@ function accueil() {
   document.getElementById("final").onclick = quizFinal;
   document.getElementById("reset").onclick = () => { if (confirm("Effacer toute la progression ?")) { etat = { nom: etat.nom, modules: {}, final: null }; sauver(); accueil(); } };
 }
-
+ 
 function module_(m) {
   $.innerHTML = `
     <button class="alt" id="retour">← Retour</button>
@@ -274,7 +284,7 @@ function module_(m) {
     document.getElementById("ok").onclick = accueil;
   });
 }
-
+ 
 function quizFinal() {
   const pool = melanger(MODULES.flatMap(m => m.questions)).slice(0, CONFIG.questionsFinal);
   $.innerHTML = `<button class="alt" id="retour">← Retour</button><h1 style="margin-top:18px">Quiz final</h1><p class="sec">Réussite à partir de ${CONFIG.seuil} %.</p><div id="quiz"></div>`;
@@ -296,7 +306,7 @@ function quizFinal() {
     else document.getElementById("again").onclick = quizFinal;
   });
 }
-
+ 
 function jouer(questions, zone, fin) {
   let i = 0, bonnes = 0;
   (function afficher() {
@@ -320,3 +330,4 @@ accueil();
 </script>
 </body>
 </html>
+
